@@ -15,10 +15,6 @@ app.get('/', (req, res) => {
   res.json({ message: 'Finance Tracker API is running!' })
 })
 
-app.get('/hello', (req, res) => {
-  res.json({ message: 'Hello, world!' })
-})
-
 app.get('/about', (req, res) => {
     res.json({ "name" : "Jomar", "project": "Finance Tracker"})
 }) 
