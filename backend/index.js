@@ -45,6 +45,18 @@ app.delete('/expenses/:id', (req, res) => {
   res.json({message: `ID # ${id} is deleted`})
 })
 
+app.put('/expenses/:id', (req, res) => {
+  const id = Number(req.params.id)
+  const expense = expenses.find(expense => expense.id === id)
+  if (!expense) {
+    return res.status(404).json({ message: "Expense not found!" })
+  }
+  expense.amount = req.body.amount
+  expense.category = req.body.category
+  expense.description = req.body.description
+  res.json({ message: `Here is ID #${id}`, data: expense})
+})
+
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`)
 })
