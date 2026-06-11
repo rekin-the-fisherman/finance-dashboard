@@ -4,7 +4,9 @@ const cors = require('cors')
 const app = express()
 const PORT = 3000
 
-const expenses = []
+let expenses = []
+
+let count = 0
 
 app.use(cors())
 app.use(express.json())
@@ -21,18 +23,26 @@ app.get('/about', (req, res) => {
     res.json({ "name" : "Jomar", "project": "Finance Tracker"})
 }) 
 
+app.get("/expenses", (req, res) => {
+  res.json(expenses)
+})
+
 app.post('/expenses', (req, res) => { 
   if (req.body.amount && req.body.category) {
-    const expense = req.body
+    count++
+    const expense = { id: count, ...req.body}
     expenses.push(expense)
-    res.json({ message: "Expense saved!", data: req.body })
+    res.json({ message: "Expense saved!", data: expense })
   } else {
     res.status(400).json({ message: "Amount and category are required!" })
   }
 })
 
-app.get("/expenses", (req, res) => {
-  res.json(expenses)
+app.delete('/expenses/:id', (req, res) => {
+  const id = Number(req.params.id)
+  expenses = expenses.filter(expense => expense.id !== id)
+  console.log(Number(req.params.id))
+  res.json({message: `ID # ${id} is deleted`})
 })
 
 app.listen(PORT, () => {
