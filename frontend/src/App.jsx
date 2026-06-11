@@ -1,5 +1,6 @@
 import { useState, useEffect} from "react"
 import ExpenseForm from "./components/ExpenseForm"
+import ExpenseList from "./components/ExpenseList"
 
 function App() {
 
@@ -18,11 +19,15 @@ function App() {
     setExpenses([...expenses, data])
   }
 
+  function handleDeleteExpense(id) {
+    setExpenses(expenses.filter(expense => expense.id !== id))
+  }
+
   return (
     <div>
       <h1>Finance Tracker</h1>
       <ExpenseForm onExpenseAdded={handleNewExpense}/>
-      <pre>{JSON.stringify(expenses, null, 2)}</pre>
+      <ExpenseList expenses={expenses} onExpenseDeleted={handleDeleteExpense}/>
       
 
     </div>

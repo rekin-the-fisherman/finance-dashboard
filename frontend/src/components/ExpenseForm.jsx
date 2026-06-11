@@ -23,6 +23,8 @@ function ExpenseForm({onExpenseAdded}) {
         onExpenseAdded(data.data)
     }
 
+    
+
     return (
         <form onSubmit={handleSubmit}>
             <label>Amount</label>
